@@ -1,0 +1,123 @@
+---
+# tasks file for telegram
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'dvcqgdientaps'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'SRX_TEST'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'vnportals' and inventory_hostname == 'vnportal-2019'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'hanoinews'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'congthongtinchinhphu'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'igatebca'
+  
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'eportaltnn'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'igatettn'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'ivan'
+  
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'vnedu'
+
+- name: Send notify to Telegram
+  community.general.telegram:
+    token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+    api_args:
+      chat_id: -900228251
+      parse_mode: "markdown"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      disable_web_page_preview: True
+      disable_notification: True
+  when: services == 'qlts-bid'

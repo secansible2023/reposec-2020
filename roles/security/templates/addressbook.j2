@@ -1,0 +1,182 @@
+{% if inventory_hostname == 'SRX_TEST' %}
+security {
+    zones {
+        security-zone VR0_untrust {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-vnportal {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'vnportal-2020' %}
+security {
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        VNPT_INTERNET {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist-vnportal {
+                address {{ source_address }};
+            }
+        }
+    }
+    {% endfor %}
+}
+{% endif %}
+{% if inventory_hostname == 'hanoinew' %}
+security {
+    zones {
+        security-zone INTERNET_DHIT {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-hanoinew {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'dvcqgdientap' %}
+security {
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        VNPT_INTERNET {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist-dvcqgdientap {
+                address {{ source_address }};
+            }
+        }
+    }
+    {% endfor %}
+}
+{% endif %}
+{% if inventory_hostname == 'congthongtincp' %}
+security {
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        VNPT_INTERNET {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist-cttcp {
+                address {{ source_address }};
+            }
+        }
+    }
+    {% endfor %}
+}
+{% endif %}
+{% if inventory_hostname == 'vsrx' %}
+security {
+    zones {
+        security-zone internal {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set ndkhai {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'igatebca' %}
+security {
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        INTERNET_NTL {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist-igatebca {
+                address {{ source_address }};
+            }
+        }
+    }
+    {% endfor %}
+}
+{% endif %}
+{% if inventory_hostname == 'eportaltnn' %}
+security {
+    zones {
+        security-zone INTERNET_DHIT {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-eportaltnn {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'igatettn' %}
+security {
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        INTERNET_TTN {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist-igatett {
+                address {{ source_address }};
+            }
+        }
+    }
+    {% endfor %}
+}
+{% endif %}
+{% if inventory_hostname == 'ivan' %}
+security {
+    zones {
+        security-zone INTERNET_DHIT {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-ivan {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'vnedu' %}
+security {
+    zones {
+        security-zone INTERNET_DHIT {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-vnedu {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}
+{% if inventory_hostname == 'qlts-bid' %}
+security {
+    zones {
+        security-zone INTERNET_DHIT {
+            {% for source_address in source_addresses.split('\n') %}
+            address-book {
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist-bid {
+                    address {{ source_address }};       
+                }
+            }
+            {% endfor %}
+        }
+    }
+}
+{% endif %}

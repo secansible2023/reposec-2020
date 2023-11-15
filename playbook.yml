@@ -1,0 +1,37 @@
+---
+- name: Generate and Install Configuration File
+  hosts: "{{ services }}"
+  roles:
+    - Juniper.junos
+    - build_config
+    - security
+    - telegram
+  connection: local
+  gather_facts: no
+
+  vars:
+    config_file: "{{ config_assemble }}/all.conf"
+  
+  tasks:
+    - name: assemble config fragments
+      assemble:
+        src: "{{ config_assemble_build }}"
+        dest: "{{ config_file }}"
+    
+    - name: install config onto device
+      juniper_junos_config:
+        provider: "{{ connection_settings }}"
+        src: "{{ config_file }}"
+        load: merge
+        confirmed: "{{ confirm_time }}"
+        diff: yes
+        ignore_warning: yes
+        comment:  "commit confirmed {{ confirm_time }}"
+      notify: confirm commit
+
+  handlers:
+    - name: confirm commit
+      juniper_junos_config:
+        provider: "{{ connection_settings }}"
+        commit: yes
+        comment:  "confirming previous commit"

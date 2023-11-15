@@ -1,0 +1,5 @@
+---
+- name: building security configuration
+  template:
+    src=addressbook.j2
+    dest={{ config_assemble_build }}/address-book.conf
