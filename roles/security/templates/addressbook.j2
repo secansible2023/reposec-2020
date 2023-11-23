@@ -1,11 +1,11 @@
-{% if inventory_hostname == 'SRX_TEST' %}
+{% if inventory_hostname == 'VNPT_TECH' %}
 security {
     zones {
-        security-zone VR0_untrust {
+        security-zone INTERNET_NTL {
             {% for source_address in source_addresses.split('\n') %}
             address-book {
                 address {{ source_address }} {{ source_address }};
-                address-set blacklist-vnportal {
+                address-set blacklist-igatettn {
                     address {{ source_address }};       
                 }
             }
