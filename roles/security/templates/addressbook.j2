@@ -1,16 +1,14 @@
 {% if inventory_hostname == 'VNPT_TECH' %}
 security {
-    zones {
-        security-zone INTERNET_NTL {
-            {% for source_address in source_addresses.split('\n') %}
-            address-book {
-                address {{ source_address }} {{ source_address }};
-                address-set blacklist-igatettn {
-                    address {{ source_address }};       
-                }
+    {% for source_address in source_addresses.split('\n') %}
+    address-book {
+        INTERNET_NTL {
+            address {{ source_address }} {{ source_address }};
+            address-set blacklist_ansible_ntl {
+                address {{ source_address }};
             }
-            {% endfor %}
         }
     }
+    {% endfor %}
 }
 {% endif %}
