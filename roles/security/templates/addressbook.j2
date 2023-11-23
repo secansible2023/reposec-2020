@@ -1,4 +1,3 @@
-{% if inventory_hostname == 'VNPT_TECH' %}
 security {
     {% for source_address in source_addresses.split('\n') %}
     address-book {
@@ -11,4 +10,3 @@ security {
     }
     {% endfor %}
 }
-{% endif %}
