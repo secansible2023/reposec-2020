@@ -8,5 +8,4 @@
       text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
       disable_web_page_preview: True
       disable_notification: True
-  when: services == 'SRX_TEST'
-  
+  when: services == 'VNPT_TECH'
