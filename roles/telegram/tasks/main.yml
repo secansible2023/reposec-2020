@@ -5,7 +5,7 @@
     api_args:
       chat_id: -900228251
       parse_mode: "markdown"
-      text: "Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
       disable_web_page_preview: True
       disable_notification: True
   when: services == 'VNPT_TECH'
