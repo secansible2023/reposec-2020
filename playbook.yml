@@ -31,7 +31,6 @@
     - name: send telegram message
       telegram:
         message: "Commit to {{ services }} successful"
-      when: result.changed
 
   handlers:
     - name: confirm commit
