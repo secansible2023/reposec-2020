@@ -27,15 +27,10 @@
         diff: yes
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
-      notify: confirm commit
-    - name: send telegram message
-      telegram:
-        message: "Commit to {{ services }} successful"
-
+      notify: notify telegram
+      
   handlers:
-    - name: confirm commit
-      juniper_junos_config:
-        provider: "{{ connection_settings }}"
-        commit: yes
-        comment:  "confirming previous commit"
+    - name: notify telegram
+      include_role:
+        name: telegram
  
