@@ -5,7 +5,6 @@
     - Juniper.junos
     - build_config
     - security
-    - telegram
   connection: local
   gather_facts: no
 
@@ -28,11 +27,9 @@
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
       notify: confirm commit
-    - name: Send notify to Telegram
-        telegram:
-        token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
-        chat_id: -900228251
-        msg: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+    - name: telegram notify
+      roles:
+        - telegram
 
   handlers:
     - name: confirm commit
