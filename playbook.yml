@@ -28,6 +28,11 @@
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
       notify: confirm commit
+    tasks:
+      - name: send telegram message
+        telegram:
+          message: "Commit to {{ services }} successful"
+        when: result.changed
 
   handlers:
     - name: confirm commit
@@ -35,8 +40,4 @@
         provider: "{{ connection_settings }}"
         commit: yes
         comment:  "confirming previous commit"
-  tasks:
-      - name: send telegram message
-        telegram:
-          message: "Commit to {{ services }} successful"
-        when: result.changed
+ 
