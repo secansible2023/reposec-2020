@@ -27,9 +27,7 @@
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
       notify: confirm commit
-    - name: telegram notify
-      roles:
-        - telegram
+    
 
   handlers:
     - name: confirm commit
@@ -37,3 +35,5 @@
         provider: "{{ connection_settings }}"
         commit: yes
         comment:  "confirming previous commit"
+    roles:
+      - telegram
