@@ -27,10 +27,20 @@
         diff: yes
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
-      notify: notify telegram
+      notify: confirm commit
+    - name: Send notify to Telegram
+        community.general.telegram:
+        token: '6060974585:AAFM95tyQjzo52CMHZQknzTM9teHk0_2OuY'
+        api_args:
+          chat_id: -900228251
+          parse_mode: "markdown"
+          text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+          disable_web_page_preview: True
+          disable_notification: True
       
   handlers:
-    - name: notify telegram
-      include_role:
-        name: telegram
- 
+    - name: confirm commit
+      juniper_junos_config:
+        provider: "{{ connection_settings }}"
+        commit: yes
+        comment:  "confirming previous commit"
