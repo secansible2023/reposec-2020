@@ -5,6 +5,7 @@
     - Juniper.junos
     - build_config
     - security
+    - telegram
   connection: local
   gather_facts: no
 
@@ -27,7 +28,6 @@
         ignore_warning: yes
         comment:  "commit confirmed {{ confirm_time }}"
       notify: confirm commit
-    
 
   handlers:
     - name: confirm commit
@@ -35,5 +35,3 @@
         provider: "{{ connection_settings }}"
         commit: yes
         comment:  "confirming previous commit"
-    roles:
-      - telegram
