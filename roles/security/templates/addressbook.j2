@@ -1,4 +1,4 @@
-{% if 'NTL' in inventory_hostname %}
+{% if 'NTL_CD4' in inventory_hostname %}
     # Do something when the hostname contains 'NTL'
     security {
         {% for source_address in source_addresses.split('\n') %}
@@ -12,7 +12,7 @@
         }
         {% endfor %}
     }
-{% elif 'TTN' in inventory_hostname %}
+{% elif 'TTN_CD4' in inventory_hostname %}
     # Do something else hostname contains 'TTN'
     security {
         {% for source_address in source_addresses.split('\n') %}
