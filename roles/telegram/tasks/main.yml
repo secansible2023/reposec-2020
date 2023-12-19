@@ -3,7 +3,7 @@
   community.general.telegram:
     token: '6482398803:AAGxJOsriVhWRvsM-VMd4ZehsvfS0ZCUXQE'
     api_args:
-      chat_id: -2094147640
+      chat_id: -@Ansible_block_notificatio
       parse_mode: "markdown"
       text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
       disable_web_page_preview: True
