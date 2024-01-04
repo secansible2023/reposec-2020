@@ -1,4 +1,4 @@
-{% if 'NTL' in inventory_hostname %}
+{% if 'NTL_CD4' in inventory_hostname %}
     # Do something when the hostname contains 'NTL'
     security {
         address-book {
@@ -12,7 +12,7 @@
             }
         }
     }
-{% elif 'TTN' in inventory_hostname %}
+{% elif 'TTN_CD4' in inventory_hostname %}
    security {
         address-book {
             global {
@@ -20,6 +20,36 @@
                 address {{ source_address }} {{ source_address }};
                 address-set blacklist_ansible_ttn {
                     address {{ source_address }};
+                }
+                {% endfor %}
+            }
+        }
+    }
+{% elif 'NTL_2019' in inventory_hostname %}
+    security {
+        zones {
+            security-zone INTERNET_DHIT {
+                {% for source_address in source_addresses.split('\n') %}
+                address-book {
+                    address {{ source_address }} {{ source_address }};
+                    address-set blacklist_ansible_ntl {
+                        address {{ source_address }};       
+                    }
+                }
+                {% endfor %}
+            }
+        }
+    }
+{% elif 'TTN_2019' in inventory_hostname %}
+    security {
+        zones {
+            security-zone INTERNET_DHIT {
+                {% for source_address in source_addresses.split('\n') %}
+                address-book {
+                    address {{ source_address }} {{ source_address }};
+                    address-set blacklist_ansible_ttn {
+                        address {{ source_address }};       
+                    }
                 }
                 {% endfor %}
             }
