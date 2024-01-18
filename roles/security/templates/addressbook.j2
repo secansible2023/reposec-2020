@@ -42,14 +42,12 @@
     }
 {% elif 'TTN_2019' in inventory_hostname %}
     security {
-        zones {
-            security-zone INTERNET_DHIT {
+        address-book {
+            global {
                 {% for source_address in source_addresses.split('\n') %}
-                address-book {
-                    address {{ source_address }} {{ source_address }};
-                    address-set blacklist_ansible_ttn {
-                        address {{ source_address }};       
-                    }
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist_ansible_ttn {
+                    address {{ source_address }};
                 }
                 {% endfor %}
             }
