@@ -1,13 +1,11 @@
 {% if 'NTL_CD4' in inventory_hostname %}
-    security {
-        zones {
-            security-zone VNPT_INTERNET {
+   security {
+        address-book {
+            global {
                 {% for source_address in source_addresses.split('\n') %}
-                address-book {
-                    address {{ source_address }} {{ source_address }};
-                    address-set blacklist_ansible_ntl {
-                        address {{ source_address }};       
-                    }
+                address {{ source_address }} {{ source_address }};
+                address-set blacklist_ansible_ntl {
+                    address {{ source_address }};
                 }
                 {% endfor %}
             }
