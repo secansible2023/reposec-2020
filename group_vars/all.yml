@@ -1,3 +1,3 @@
 ---
 user_data_path: "./"
-ansible_ssh_common_args='-o ProxyCommand="/usr/bin/nc -X 5 -x 10.165.62.94:9090 %h %p'
+ansible_ssh_common_args: '-o ProxyCommand="/usr/bin/nc -X 5 -x 10.165.62.94:9090 %h %p"'
