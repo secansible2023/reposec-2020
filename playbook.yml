@@ -5,6 +5,7 @@
     - Juniper.junos
     - build_config
     - security
+    - telegram
   connection: local
   gather_facts: no
 
