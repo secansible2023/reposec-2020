@@ -1,2 +1,3 @@
 ---
 user_data_path: "./"
+ALL_PROXY: "socks5h://10.165.62.94:9090"
