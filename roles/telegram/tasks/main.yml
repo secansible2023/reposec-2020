@@ -8,5 +8,4 @@
       text: "[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
       disable_web_page_preview: True
       disable_notification: True
-  environment:
-      ALL_PROXY: "socks5h://10.165.62.94:9090"
+
