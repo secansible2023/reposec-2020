@@ -5,6 +5,7 @@
     - Juniper.junos
     - build_config
     - security
+    - telegram
   connection: local
   gather_facts: no
 
@@ -30,7 +31,7 @@
     - name: Send Telegram message via curl + SOCKS5
       ansible.builtin.shell: |
         curl -s --socks5-hostname 10.165.62.94:9090 \
-          "https://api.telegram.org/bot6482398803:AAGxJOsriVhWRvsM-VMd4ZehsvfS0ZCUXQE/sendMessage" \
+          "https://api.telegram.org/bot{{ token_tele }}/sendMessage" \
           -d "chat_id=-1002094147640" \
           -d "text=[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
 
