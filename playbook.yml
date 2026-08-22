@@ -1,22 +1,27 @@
 ---
 - name: Generate and Install Configuration File
   hosts: "{{ services }}"
+  connection: local
+  gather_facts: no
+  # Make sure the "confirm commit" handler still runs even if a later
+  # task in this play fails, so a confirmed commit is never silently
+  # abandoned just because of an unrelated downstream error.
+  force_handlers: true
+
   roles:
     - Juniper.junos
     - build_config
     - security
-  connection: local
-  gather_facts: no
 
   vars:
     config_file: "{{ config_assemble }}/all.conf"
-  
+
   tasks:
     - name: assemble config fragments
       assemble:
         src: "{{ config_assemble_build }}"
         dest: "{{ config_file }}"
-    
+
     - name: install config onto device
       juniper_junos_config:
         provider: "{{ connection_settings }}"
@@ -25,18 +30,59 @@
         confirmed: "{{ confirm_time }}"
         diff: yes
         ignore_warning: yes
-        comment:  "commit confirmed {{ confirm_time }}"
+        comment: "commit confirmed {{ confirm_time }}"
+      register: config_result
+      # A confirmed commit is applied to the device BEFORE the module
+      # tries to release its own lock. Junos deliberately keeps the
+      # configuration locked until the commit is confirmed, so that
+      # final "close configuration" step can throw:
+      #   "Unable to close the configuration: UnlockError"
+      # ...even though the commit itself went through fine.
+      #
+      # Left as-is, Ansible marks this task "failed", the play stops,
+      # the "confirm commit" handler below never fires, and confirm_time
+      # minutes later Junos auto-rolls the change back - so every run
+      # "fails" and the change never actually sticks.
+      #
+      # Treat ONLY that specific error as non-fatal, and force a
+      # changed=true so the handler still gets notified and runs.
+      failed_when:
+        - config_result is failed
+        - "'UnlockError' not in (config_result.msg | default(''))"
+      changed_when: >-
+        config_result.changed or
+        ('UnlockError' in (config_result.msg | default('')))
       notify: confirm commit
-    - name: Send Telegram message via curl + SOCKS5
-      ansible.builtin.shell: |
-        curl -s \
-          "https://api.telegram.org/bot{{ token_tele }}/sendMessage" \
-          -d "chat_id=-1002094147640" \
-          -d "text=[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+
+    - name: flush handlers now so the commit is confirmed immediately
+      meta: flush_handlers
+
+    - name: Send Telegram message via curl
+      ansible.builtin.command:
+        argv:
+          - curl
+          - -s
+          - "https://api.telegram.org/bot{{ token_tele }}/sendMessage"
+          - -d
+          - "chat_id=-1002094147640"
+          - -d
+          - "text=[{{ services }}] Source IP Address {{ source_addresses }} has been blocked - Reason: {{ reason }}"
+      no_log: true
+      # NOTE: the original task name said "via curl + SOCKS5" but the
+      # actual curl call never passed a proxy flag (no -x/--socks5). If
+      # this control node needs to reach Telegram through a SOCKS5
+      # proxy, add e.g. "-x", "socks5h://<host>:<port>" to the argv list
+      # above - left out here since the proxy details aren't in this repo.
+      #
+      # Also switched shell -> command with argv: `source_addresses` and
+      # `reason` are now passed as literal arguments to curl with no
+      # shell involved, instead of being interpolated into a shell
+      # string (which was a command-injection hole given these values
+      # plausibly originate from an external alert/ticket).
 
   handlers:
     - name: confirm commit
       juniper_junos_config:
         provider: "{{ connection_settings }}"
         commit: yes
-        comment:  "confirming previous commit"
+        comment: "confirming previous commit"
