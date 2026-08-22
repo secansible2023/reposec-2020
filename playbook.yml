@@ -31,6 +31,18 @@
         diff: yes
         ignore_warning: yes
         comment: "commit confirmed {{ confirm_time }}"
+        # IMPORTANT: use a private candidate instead of taking the
+        # device-wide exclusive lock (the module's default). A
+        # confirmed commit works fine from private mode, but private
+        # mode never blocks other sessions the way exclusive does. This
+        # matters because if THIS task's own session fails to close
+        # cleanly (see the UnlockError note below), an exclusive lock
+        # would then block every session that comes after it - including
+        # its own "confirm commit" handler a few seconds later in this
+        # same run, and any Tower job that starts before the stuck
+        # session is cleared. Private mode contains the blast radius to
+        # just this task even when cleanup misbehaves.
+        config_mode: private
       register: config_result
       # A confirmed commit is applied to the device BEFORE the module
       # tries to release its own lock. Junos deliberately keeps the
@@ -86,3 +98,10 @@
         provider: "{{ connection_settings }}"
         commit: yes
         comment: "confirming previous commit"
+        # Same reasoning as above: this task also defaulted to exclusive
+        # mode, which is exactly what produced the
+        #   "Unable to open the configuration in exclusive mode: LockError"
+        # you saw - it was blocked by the install task's own
+        # not-yet-closed exclusive session from moments earlier in the
+        # same run. Confirming a commit doesn't need exclusive access.
+        config_mode: private
