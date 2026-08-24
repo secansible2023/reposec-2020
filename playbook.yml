@@ -98,11 +98,6 @@
         timeout: 5
       notify: confirm commit
     - name: confirm commit
-      juniper_junos_config:
+      juniper_junos_rpc:                             # <--- Changed from juniper_junos_config
         provider: "{{ connection_settings }}"
-        comment: "confirming previous commit"
-        commit: yes
-        config_mode: private
-        check: no
-        diff: no
-        close_on_exit: no
+        rpc: commit-configuration
