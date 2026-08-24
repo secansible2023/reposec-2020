@@ -93,15 +93,15 @@
       # plausibly originate from an external alert/ticket).
 
   handlers:
+    - name: delay before confirm
+      ansible.builtin.wait_for:
+        timeout: 5
+      notify: confirm commit
     - name: confirm commit
       juniper_junos_config:
         provider: "{{ connection_settings }}"
-        commit: yes
         comment: "confirming previous commit"
-        # Same reasoning as above: this task also defaulted to exclusive
-        # mode, which is exactly what produced the
-        #   "Unable to open the configuration in exclusive mode: LockError"
-        # you saw - it was blocked by the install task's own
-        # not-yet-closed exclusive session from moments earlier in the
-        # same run. Confirming a commit doesn't need exclusive access.
+        commit: yes
         config_mode: private
+        check: no
+        diff: no
