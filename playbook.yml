@@ -105,3 +105,4 @@
         config_mode: private
         check: no
         diff: no
+        close_on_exit: no
