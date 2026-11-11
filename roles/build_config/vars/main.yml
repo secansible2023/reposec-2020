@@ -5,6 +5,5 @@ config_assemble: "{{ user_data_path }}/config/{{ inventory_hostname }}"
 config_assemble_build: "{{ config_assemble }}/build"
 connection_settings:
   host: "{{ ansible_host }}"
-  confirmed: "{{ confirm_time | int }}"
   timeout: "{{ commit_timeout | int }}"
   port: "22"
